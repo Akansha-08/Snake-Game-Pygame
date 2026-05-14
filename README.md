@@ -1,21 +1,63 @@
 # 🐍 Snake Game using Pygame
 
-A classic Snake Game built using Python and Pygame, demonstrating game loop design, collision detection, and event handling.
+A classic Snake Game built using Python and Pygame featuring real-time gameplay, collision detection, score tracking, and a leaderboard system powered by SQLite database integration.
 
+---
 
 ## 🎮 Features
-- Smooth keyboard controls (Arrow keys)
-- Real-time score tracking
-- Random food spawning
-- Wall collision detection
+- Real-time Snake gameplay using Pygame
+- Smooth game loop with FPS control
+- Boundary collision detection
 - Self-collision detection
-- Game over screen with restart option
+- Dynamic score tracking
+- Leaderboard system using SQLite database
+- Session-based leaderboard updates
+- Pause and Resume functionality
+- Restart game using keyboard controls
 
+---
 
 ## 🛠 Tech Stack
 - Python
 - Pygame
+- SQLite3
 
+---
+
+## 📁 Project Structure
+
+```text
+Snake-Game-Pygame/
+│
+├── assets/
+│   ├── fonts/
+│   ├── sounds/
+│   └── images/
+│
+├── database/
+│   └── leaderboard.db
+│
+├── main.py
+├── snake.py
+├── food.py
+├── database.py
+├── requirements.txt
+├── README.md
+└── .gitignore
+```
+
+---
+
+## 🎯 Controls
+
+| Key | Action |
+|-----|--------|
+| Arrow Keys | Move Snake |
+| P | Pause / Resume |
+| R | Restart Game |
+| ESC | Quit Game |
+
+---
 
 ## 🚀 How to Run
 ### 1️⃣ Clone the repository
@@ -31,34 +73,50 @@ pip install pygame
 
 ### 3️⃣ Run the game
 ```bash
-python snake.py
+python main.py
 ```
 
+---
 
-## 🎯 Controls
+## 🎮Gameplay Features
 
-- ⬅ Left Arrow → Move Left
-- ➡ Right Arrow → Move Right
-- ⬆ Up Arrow → Move Up
-- ⬇ Down Arrow → Move Down
-- P → Play Again (after Game Over)
-- Q → Quit Game
+### 💥 Collision System
+- Detects wall collisions
+- Detects self-collision with snake body
 
+### 🏆 Leaderboard
+- Stores player names and scores
+- Uses SQLite database integration
+- Displays leaderboard on Game Over screen
 
-## 📚 What I Learned
-- Game loop architecture
-- Event handling in Pygame
-- Collision detection logic
-- Managing game states (Start, Game Over, Restart)
-- Frame rate control using pygame.time.Clock()
+### ⏸️ Game Controls
+- Pause and Resume support
+- Restart functionality
+- Smooth keyboard controls
 
+---
 
 ## 🔮 Future Improvements
-- Add sound effects
-- Add increasing difficulty levels
-- Implement high score system
-- Refactor into Object-Oriented Programming structure
+- Sound effects
+- Start menu
+- Particle animations
+- Theme system
+- Background music
+- Difficulty levels
+- Mouse-based buttons
 
+---
+
+## 📚 Learning Outcomes
+- Game loops
+- Event handling
+- Object-oriented programming
+- Collision detection
+- Database integration
+- File organization
+- UI enhancement in games
+
+---
 
 ## 👩‍💻 Author
 
