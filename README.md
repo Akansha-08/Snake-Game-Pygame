@@ -2,6 +2,13 @@
 
 A classic Snake Game built using Python and Pygame featuring real-time gameplay, collision detection, score tracking, and a leaderboard system powered by SQLite database integration.
 
+## 📸 Screenshots
+
+| Gameplay | Game Over Screen | Leaderboard |
+|:---:|:---:|:---:|
+| ![Gameplay](assets/images/screenshot_gameplay.png) | ![Game Paused](assets/images/screenshot_pause_menu.png) | ![Leaderboard](assets/images/screenshot_leaderboard.png) |
+
+
 ---
 
 ## 🎮 Features
@@ -78,7 +85,7 @@ python main.py
 
 ---
 
-## 🎮Gameplay Features
+## 🎮 Gameplay Features
 
 ### 💥 Collision System
 - Detects wall collisions
@@ -120,7 +127,7 @@ python main.py
 
 ## 👩‍💻 Author
 
-**Akansha**  
-B.Tech CSE Student  
+**Akansha**
+B.Tech CSE Student
 
 This project was developed as part of my Python learning journey to strengthen core programming and game development fundamentals.
