@@ -3,8 +3,6 @@ from src.database import Database
 from src.settings import *
 from src.snake import Snake
 from src.food import Food
-from src.snake import Snake
-from src.food import Food
 from ai.ai_agent import AIAgent
 
 pygame.init()
@@ -209,9 +207,10 @@ class Game:
             name_text = self.font.render(self.player_name, True, GREEN)
             info = self.font.render("Press ENTER to Start", True, RED)
 
-            self.window.blit(title, [180, 120])
-            self.window.blit(name_text, [180, 180])
-            self.window.blit(info, [160, 240])
+            center_y = HEIGHT // 2
+            self.window.blit(title, [(WIDTH - title.get_width()) // 2, center_y - 60])
+            self.window.blit(name_text, [(WIDTH - name_text.get_width()) // 2, center_y])
+            self.window.blit(info, [(WIDTH - info.get_width()) // 2, center_y + 60])
 
             
             pygame.display.update()
@@ -223,11 +222,11 @@ class Game:
             pygame.draw.line(
                 self.window,
                 WHITE,
-                (x, 0),
+                (x, TOP_BAR_HEIGHT),
                 (x, HEIGHT)
             )
 
-        for y in range(0, HEIGHT, SNAKE_SIZE):
+        for y in range(TOP_BAR_HEIGHT, HEIGHT, SNAKE_SIZE):
             pygame.draw.line(
                 self.window,
                 WHITE,
@@ -239,37 +238,8 @@ class Game:
 
         self.snake.draw(self.window)
 
-        # Score Display
-        score_text = self.font.render(
-            f"Score: {self.snake.length - 1}",
-            True,
-            RED
-        )
-        self.window.blit(score_text, [10,10])
 
-        high_score_text = self.font.render(
-            f"High Score: {self.high_score}",
-            True,
-            BLUE
-        )
-
-        self.window.blit(high_score_text, [10, 40])
-
-        # Difficulty Display
-        difficulty_text = self.font.render(
-            f"Speed: {self.game_speed}",
-            True,
-            BLUE
-        )
-        self.window.blit(difficulty_text, [10, 70])
-
-        mode_text = self.font.render(
-            f"Mode: {'AI' if self.ai_mode else 'Manual'} (Press A to toggle)",
-            True,
-            BLUE
-        )
-        self.window.blit(mode_text, [10, 100])
-
+        # Optional: visualize the AI's currently planned path
         if self.ai_mode and self.ai_agent.current_path:
             for cell in self.ai_agent.current_path:
                 pygame.draw.rect(
@@ -279,6 +249,29 @@ class Game:
                     1
                 )
 
+        # ---- Top Status Ribbon ----
+        pygame.draw.rect(self.window, BLACK, [0, 0, WIDTH, TOP_BAR_HEIGHT])
+
+        score_text = self.font.render(f"Score: {self.snake.length - 1}", True, WHITE)
+        high_score_text = self.font.render(f"High Score: {self.high_score}", True, WHITE)
+        difficulty_text = self.font.render(f"Speed: {self.game_speed}", True, WHITE)
+        mode_text = self.font.render(
+            f"Mode: {'AI' if self.ai_mode else 'Manual'} (A to toggle)",
+            True,
+            WHITE
+        )
+        controls_text = self.font.render("Arrows: Move | P: Pause | 1/2/3: Speed", True, WHITE)
+
+        segments = [score_text, high_score_text, difficulty_text, mode_text, controls_text]
+        gap = 30
+        total_width = sum(seg.get_width() for seg in segments) + gap * (len(segments) - 1)
+        x = max((WIDTH - total_width) // 2, 10)
+        y = (TOP_BAR_HEIGHT - score_text.get_height()) // 2
+
+        for seg in segments:
+            self.window.blit(seg, [x, y])
+            x += seg.get_width() + gap
+
         # Pause Screen
         if self.game_state == "PAUSED":
             pause_text = self.font.render(
@@ -286,7 +279,7 @@ class Game:
                 True,
                 BLUE
             )
-            self.window.blit(pause_text, [220, 180])
+            self.window.blit(pause_text, [(WIDTH - pause_text.get_width()) // 2, HEIGHT // 2])
         
         # Game Over Screen
         if self.game_state == "GAME_OVER":
@@ -304,13 +297,13 @@ class Game:
                 True,
                 BLUE
             )
-            self.window.blit(game_over_text, [210, 60])
-            self.window.blit(restart_text, [170, 100])
+            center_y = HEIGHT // 2 - 100
+            self.window.blit(game_over_text, [(WIDTH - game_over_text.get_width()) // 2, center_y])
+            self.window.blit(restart_text, [(WIDTH - restart_text.get_width()) // 2, center_y + 40])
+
 
             # Leaderboard Display
             leaderboard = self.db.get_top_scores()
-
-            y = 170
 
             title = self.font.render(
                 "Leaderboard",
@@ -318,7 +311,8 @@ class Game:
                 BLUE
             )
 
-            self.window.blit(title, [210, y])
+            y = center_y + 100
+            self.window.blit(title, [(WIDTH - title.get_width()) // 2, y])
 
             y += 40
 
@@ -330,7 +324,7 @@ class Game:
                     GREEN
                 )
 
-                self.window.blit(text, [180, y])
+                self.window.blit(text, [(WIDTH - text.get_width()) // 2, y])
 
                 y += 35
         

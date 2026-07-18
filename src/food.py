@@ -10,7 +10,8 @@ class Food:
     def generate_food(self):
 
         self.x = random.randrange(0, WIDTH-SNAKE_SIZE, 10)
-        self.y = random.randrange(0, HEIGHT-SNAKE_SIZE, 10)
+        # Start below the top status ribbon so food never spawns under it
+        self.y = random.randrange(TOP_BAR_HEIGHT, HEIGHT-SNAKE_SIZE, 10)
 
     def draw(self, window):
 
