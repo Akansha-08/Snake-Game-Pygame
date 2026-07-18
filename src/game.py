@@ -3,6 +3,9 @@ from src.database import Database
 from src.settings import *
 from src.snake import Snake
 from src.food import Food
+from src.snake import Snake
+from src.food import Food
+from ai.ai_agent import AIAgent
 
 pygame.init()
 
@@ -41,6 +44,10 @@ class Game:
         self.game_speed = FPS
 
         self.score_saved = False
+
+        # AI Autoplay state (toggled with the "A" key)
+        self.ai_mode = False
+        self.ai_agent = AIAgent()
 
 
     def restart_game(self):
@@ -136,12 +143,21 @@ class Game:
 
                 elif event.key == pygame.K_3:
                     self.game_speed = 25
+                
+                 # Toggle AI autoplay mode
+                elif event.key == pygame.K_a:
+                    self.ai_mode = not self.ai_mode
 
 
     def update(self):
         # Stop updating when paused or game over
         if self.game_state != "PLAYING":
             return
+
+        if self.ai_mode:
+            dx, dy = self.ai_agent.get_next_direction(self.snake, self.food)
+            self.snake.x_change = dx
+            self.snake.y_change = dy
 
         self.snake.move()
 
@@ -242,6 +258,22 @@ class Game:
             BLUE
         )
         self.window.blit(difficulty_text, [10, 70])
+
+        mode_text = self.font.render(
+            f"Mode: {'AI' if self.ai_mode else 'Manual'} (Press A to toggle)",
+            True,
+            BLUE
+        )
+        self.window.blit(mode_text, [10, 100])
+
+        if self.ai_mode and self.ai_agent.current_path:
+            for cell in self.ai_agent.current_path:
+                pygame.draw.rect(
+                    self.window,
+                    (255, 165, 0),
+                    [cell[0], cell[1], SNAKE_SIZE, SNAKE_SIZE],
+                    1
+                )
 
         # Pause Screen
         if self.game_state == "PAUSED":
