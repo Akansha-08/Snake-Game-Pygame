@@ -12,7 +12,7 @@ pygame.init()
 class Game:
 
     def __init__(self):
-        self.window = pygame.display.set_mode((WIDTH, HEIGHT))
+        self.window = pygame.display.set_mode((WIDTH, HEIGHT), pygame.FULLSCREEN)
         pygame.display.set_caption("Enhanced Snake Game")
 
         self.clock = pygame.time.Clock()
@@ -76,6 +76,10 @@ class Game:
                 self.running = False
 
             if event.type == pygame.KEYDOWN:
+                # Emergency exit from fullscreen
+                if event.key == pygame.K_ESCAPE:
+                    self.running = False
+                
                 # Name Input System
                 if self.game_state == "NAME_INPUT":
 
