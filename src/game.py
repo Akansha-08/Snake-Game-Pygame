@@ -42,6 +42,7 @@ class Game:
         self.game_speed = FPS
 
         self.score_saved = False
+        self.game_over_reason = ""
 
         # AI Autoplay state (toggled with the "A" key)
         self.ai_mode = False
@@ -54,6 +55,7 @@ class Game:
         self.game_state = "NAME_INPUT"
         self.player_name = ""
         self.score_saved = False
+        self.game_over_reason = ""
 
 
     def save_high_score(self):   
@@ -173,6 +175,7 @@ class Game:
             head[1] < 0
         ):
             self.game_state = "GAME_OVER"
+            self.game_over_reason = "You hit the wall!"
 
             self.save_to_leaderboard()
 
@@ -194,6 +197,7 @@ class Game:
 
             if block == head:
                 self.game_state = "GAME_OVER"
+                self.game_over_reason = "You ran into yourself!"
 
                 self.save_to_leaderboard()
 
@@ -299,7 +303,11 @@ class Game:
             )
             center_y = HEIGHT // 2 - 100
             self.window.blit(game_over_text, [(WIDTH - game_over_text.get_width()) // 2, center_y])
-            self.window.blit(restart_text, [(WIDTH - restart_text.get_width()) // 2, center_y + 40])
+
+            reason_text = self.font.render(self.game_over_reason, True, RED)
+            self.window.blit(reason_text, [(WIDTH - reason_text.get_width()) // 2, center_y + 40])
+
+            self.window.blit(restart_text, [(WIDTH - restart_text.get_width()) // 2, center_y + 80])
 
 
             # Leaderboard Display
@@ -311,7 +319,7 @@ class Game:
                 BLUE
             )
 
-            y = center_y + 100
+            y = center_y + 140
             self.window.blit(title, [(WIDTH - title.get_width()) // 2, y])
 
             y += 40
