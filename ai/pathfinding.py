@@ -11,7 +11,7 @@ which is exactly what we want for "shortest safe path to the food".
 from collections import deque
 
 
-def bfs_shortest_path(start, goal, obstacles, width, height, cell_size):
+def bfs_shortest_path(start, goal, obstacles, width, height, cell_size, min_y=0):
     """
     Find the shortest path from `start` to `goal` on a grid using BFS.
 
@@ -57,8 +57,9 @@ def bfs_shortest_path(start, goal, obstacles, width, height, cell_size):
             if neighbor in visited:
                 continue
 
-            # Stay inside the play area.
-            if not (0 <= neighbor[0] < width and 0 <= neighbor[1] < height):
+            # Stay inside the play area (min_y excludes the top ribbon,
+            # which is not walkable even though it isn't drawn as a wall).
+            if not (0 <= neighbor[0] < width and min_y <= neighbor[1] < height):
                 continue
 
             # Treat the snake's body as an obstacle (the goal cell is always

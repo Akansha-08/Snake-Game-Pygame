@@ -17,7 +17,7 @@ Decision process (no machine learning / reinforcement learning involved):
 
 from ai.pathfinding import bfs_shortest_path
 from ai.utils import DIRECTIONS, direction_between, is_safe_move, opposite_direction
-from src.settings import SNAKE_SIZE, WIDTH, HEIGHT
+from src.settings import SNAKE_SIZE, WIDTH, HEIGHT, TOP_BAR_HEIGHT
 
 
 class AIAgent:
@@ -38,7 +38,7 @@ class AIAgent:
         # The body (excluding the head) is what the snake must avoid.
         body_cells = {tuple(block) for block in list(snake.body)[:-1]}
 
-        path = bfs_shortest_path(head, goal, body_cells, WIDTH, HEIGHT, SNAKE_SIZE)
+        path = bfs_shortest_path(head, goal, body_cells, WIDTH, HEIGHT, SNAKE_SIZE, min_y=TOP_BAR_HEIGHT)
         current_dir = (snake.x_change, snake.y_change)
 
         if path:

@@ -168,11 +168,14 @@ class Game:
         head = self.snake.body[-1]
 
         # Wall collision
+        # Wall collision (the top ribbon counts as a wall too — it's not
+        # part of the playable area, even though the snake could visually
+        # slide behind it if we didn't check this)
         if (
             head[0] >= WIDTH or
             head[0] < 0 or
             head[1] >= HEIGHT or
-            head[1] < 0
+            head[1] < TOP_BAR_HEIGHT
         ):
             self.game_state = "GAME_OVER"
             self.game_over_reason = "You hit the wall!"

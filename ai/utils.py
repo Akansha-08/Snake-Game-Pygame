@@ -5,7 +5,7 @@ Small, reusable helpers for grid/direction math used by the AI agent.
 Kept separate from ai_agent.py so the decision logic stays readable.
 """
 
-from src.settings import SNAKE_SIZE, WIDTH, HEIGHT
+from src.settings import SNAKE_SIZE, WIDTH, HEIGHT, TOP_BAR_HEIGHT
 
 # The four possible movement vectors on the grid.
 DIRECTIONS = [
@@ -25,9 +25,13 @@ def direction_between(point_a, point_b):
 
 
 def is_within_bounds(point):
-    """Check whether a (x, y) point lies inside the play area."""
+    """
+    Check whether a (x, y) point lies inside the actual playable area —
+    this excludes the top status ribbon, which is off-limits even though
+    it isn't drawn as a wall.
+    """
     x, y = point
-    return 0 <= x < WIDTH and 0 <= y < HEIGHT
+    return 0 <= x < WIDTH and TOP_BAR_HEIGHT <= y < HEIGHT
 
 
 def is_safe_move(point, obstacles):
